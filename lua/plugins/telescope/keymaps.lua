@@ -46,10 +46,6 @@ end
 map_tele("n", "<leader>;", "buffers", { desc = "buffers" })
 map_tele("n", "<leader><c-P>", "find_files", { desc = "find files" })
 
-map_tele("n", "<leader>ff", "find_files")
-
-map_tele("n", "<leader>fl", "live_grep")
-
 -- LSP
 map_tele("n", "<leader>Lt", "treesitter", { desc = "treesitter symbols (buffer)" })  
 map_tele("n", "<leader>Lr", "lsp_references", { desc = "references [LSP]" })
@@ -62,4 +58,13 @@ map_tele("n", "<leader>LS", "lsp_workspace_symbols", { desc = "workspace symbols
 map_tele("n", "<leader>Lg", "diagnostics", { bufnr = 0, desc = "document diagnostics [LSP]" })
 map_tele("n", "<leader>LG", "diagnostics", { desc = "workspace diagnostics [LSP]" })
 
+-- Search 
+map_tele("n", "<leader>sc", "colorscheme", { desc = "Color scheme [Telescope]" })
+map_tele("n", "<leader>sC", "commands", { desc = "Commands [Telescope]" })
+map_tele("n", "<leader>sf", "find_files", { desc = "Find files [Telescope]" })
+map_tele("n", "<leader>st", "live_grep", { desc = "Live grep [Telescope]" })
+map_tele("n", "<leader>sl", "resume", { desc = "Resume last search [Telescope]" })
+map_tele("n", "<leader>sk", "keymaps", { desc = "Keymap [Telescope]" })
+map_tele("n", "<leader>sr", "registers", { desc = "Register [Telescope]" })
+map_tele("n", "<leader>sp", "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>", { desc = "Colorscheme with Preview" })
 
