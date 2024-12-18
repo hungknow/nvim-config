@@ -1,6 +1,8 @@
 local o = vim.opt
+local utils = require("utils")
 
 -- o.mouse = "" -- disable the mouse
+o.mousemodel = extend -- VISUAL BLOCK mode using mouse
 o.termguicolors = true -- enable 24bit colors
 o.background = "dark" -- use the dark version of colorschemes
 o.fileformat = "unix" -- <nl> for EOL
@@ -23,6 +25,40 @@ o.showmatch        = true                   -- highlight matching [{()}]
 o.writebackup      = false                  -- do not backup file before write
 o.swapfile         = false                  -- no swap file
 
--- Map leader to <space>                                                                                                                                                                                                                  
-vim.g.mapleader                 = " "                                                                                                                                                                                                     
+-- Map leader to <space>
+vim.g.mapleader                 = " "
 vim.g.maplocalleader            = "\\" 
+
+-- disable netrw at the very start
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- MacOS clipboard
+if utils.is_darwin() then
+  vim.g.clipboard = {
+    name = "macOS-clipboard",
+    copy = {
+      ["+"] = "pbcopy",
+      ["*"] = "pbcopy",
+    },
+    paste = {
+      ["+"] = "pbpaste",
+      ["*"] = "pbpaste",
+    },
+  }
+end
+
+if utils.__HAS_NVIM_010 and vim.env.SSH_TTY then
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    },
+  }
+end
+

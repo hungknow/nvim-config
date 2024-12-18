@@ -12,17 +12,23 @@ map("t", "<C-j>", "<C-\\><C-N><C-w>j", { silent = true })
 map("t", "<C-k>", "<C-\\><C-N><C-w>k", { silent = true })
 map("t", "<C-l>", "<C-\\><C-N><C-w>l", { silent = true })
 
+-- Buffers
+map("n", "<leader>bb", "<cmd>bpre<cr>", { desc = "Previous Buffer" })
+map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 
 map("v", "<", "<gv", {})
 map("v", ">", ">gv", {})
 
--- Turn off search matches with double-<Esc>                                                                                                                                                                                              
+-- Turn off search matches with double-<Esc>
 map("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR>", { silent = true })
 
--- Toggle colored column at 81                                                                                                                                                                                                            
-map("n", "<leader>|", function()                                                                                                                                                                                                          
-  vim.opt.colorcolumn = #vim.o.colorcolumn > 0 and ""                                                                                                                                                                                   
-    or tostring(vim.g._colorcolumn)                                                                                                                                                                                                   
-  end,                                                                                                                                                                                                                                    
+-- Toggle colored column at 81
+map("n", "<leader>|", function()
+  vim.opt.colorcolumn = #vim.o.colorcolumn > 0 and ""
+    or tostring(vim.g._colorcolumn)
+  end,
   { silent = true, desc = "toggle color column on/off" })
 
+
+-- QuickFix
+map("n", "<C-q>", "<cmd>cclose<cr>", { silent = true, desc = "Close the QuickFix" })

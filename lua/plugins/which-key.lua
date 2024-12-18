@@ -7,7 +7,7 @@ local M = {
 M.key = {
     {
         mode = { "n", "v" },
-        "<Leader>?",
+        "<leader>?",
         function()
             require("which-key").show({ global = true })
         end,
@@ -15,6 +15,14 @@ M.key = {
         desc = "Which-key root"
     }
 }
+
+M.config = function()
+  local wk = require("which-key")
+  -- wk.add({
+  --   { "<leader>bb", "<cmd>bpre<cr>", desc = "Previous Buffer" },
+  --   { "<leader>bn", "<cmd>bnext<cr>", desc = "Next Buffer" },
+  -- })
+end
 
 
 return M

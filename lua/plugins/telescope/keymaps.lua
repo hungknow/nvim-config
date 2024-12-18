@@ -13,7 +13,7 @@ local map_tele = function(mode, key, f, options, buffer)
     for _, k in ipairs({ "F", "L", "G" }) do
       key = key:gsub("<leader>" .. k, "<leader>" .. string.lower(k))
     end
- )   for _, k in ipairs({ "<F1>", "<c-P>", "<c-K>" }) do
+    for _, k in ipairs({ "<F1>", "<c-P>", "<c-K>" }) do
       if key == "<leader>" .. k then
         key = k
       end
@@ -46,9 +46,9 @@ end
 map_tele("n", "<leader>;", "buffers", { desc = "buffers" })
 map_tele("n", "<leader><c-P>", "find_files", { desc = "find files" })
 
-map_tele("n", "<leader>Ff", "find_files")
+map_tele("n", "<leader>ff", "find_files")
 
-map_tele("n", "<leader>Fl", "live_grep")
+map_tele("n", "<leader>fl", "live_grep")
 
 -- LSP
 map_tele("n", "<leader>Lt", "treesitter", { desc = "treesitter symbols (buffer)" })  
