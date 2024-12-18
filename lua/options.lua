@@ -2,6 +2,7 @@ local o = vim.opt
 local utils = require("utils")
 
 -- o.mouse = "" -- disable the mouse
+o.mouse = "a" -- Allow mouse to be used in nvim
 o.mousemodel = extend -- VISUAL BLOCK mode using mouse
 o.termguicolors = true -- enable 24bit colors
 o.background = "dark" -- use the dark version of colorschemes
@@ -11,6 +12,7 @@ o.number = true -- show absolute line number at the cursor position
 o.cursorline = true  -- Show a line where the current cursor is
 vim.g._colorcolumn = 100 -- Show mark column
 o.colorcolumn = tostring(vim.g._colorcolumn)
+o.signcolumn = "yes" -- Always show the sign column, otherwise it would shift the text each time
 
 
 o.tabstop = 2 -- Tab indentation levels every two columns
@@ -24,6 +26,9 @@ o.showmatch        = true                   -- highlight matching [{()}]
 
 o.writebackup      = false                  -- do not backup file before write
 o.swapfile         = false                  -- no swap file
+
+o.cmdheight = 1 -- More spaces in command line for displaying messages
+o.fileencoding = "utf-8" -- the encoding written to a file
 
 -- Map leader to <space>
 vim.g.mapleader                 = " "
