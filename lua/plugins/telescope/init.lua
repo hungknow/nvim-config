@@ -1,8 +1,10 @@
 local M = {
   'nvim-telescope/telescope.nvim',
   branch = "0.1.x",
-  lazy = true,
-  dependencies = { 'nvim-lua/plenary.nvim' },
+  --lazy = true,
+  dependencies = { 
+    'nvim-lua/plenary.nvim',
+  },
 }
 
 function M.init()
@@ -12,8 +14,9 @@ end
 function M.config()
   require("plugins.telescope.cmds")
   local actions = require("utils.modules").require_on_exported_call "telescope.actions"
+  local telescope = require("telescope")
 
-  require("telescope").setup{
+  telescope.setup{
     pickers = {
       find_files = {
         hidden = true,
@@ -49,6 +52,7 @@ function M.config()
       },
     },
   }
+
 end
 
 return M

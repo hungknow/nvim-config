@@ -22,7 +22,26 @@ local M = {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus", "NvimTreeFindFileToggle" },
     event = "User DirOpened",
-    opts = {},
+    opts = {
+      view = {
+        adaptive_size = true,
+        preserve_window_proportions = true,
+      },
+      actions = {
+        open_file = {
+          resize_window = false,
+        },
+      },
+
+      -- projects.nvim https://github.com/ahmedkhalf/project.nvim
+      sync_root_with_cwd = true,
+      respect_buf_cwd = true,
+      update_focused_file = {
+        enable = true,
+        update_root = true
+      },
+
+    },
     -- opts = {
     --   on_attach = my_on_attach,
     -- },

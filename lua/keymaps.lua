@@ -29,6 +29,9 @@ map("n", "<leader>|", function()
   end,
   { silent = true, desc = "toggle color column on/off" })
 
-
 -- QuickFix
-map("n", "<C-q>", "<cmd>cclose<cr>", { silent = true, desc = "Close the QuickFix" })
+map("n", "[q", "<cmd>cclose<cr>", { silent = true, desc = "Close the QuickFix" })
+map("n", "[j", "<cmd>try | cnext | catch | cfirst | catch | endtry<cr>", { silent = true, desc = "Forward QuickFix list" })
+map("n", "[k", "<cmd>try | cprevious | catch | clast | catch | endtry<cr>", { silent = true, desc = "Backward QuickFix list" })
+map("n", "[J", "<cmd>cnfile<cr>", { silent = true, desc = "Forward file [QuickFix]" })
+map("n", "[K", "<cmd>cpfile<cr>", { silent = true, desc = "Backward file [QuickFix]" })

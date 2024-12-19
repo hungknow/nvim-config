@@ -1,7 +1,8 @@
 local M = {
   "askfiy/visual_studio_code",
+  enabled = false,
   priority = 100,
-  opt =  {
+  opts =  {
     -- `dark` or `light`
     mode = "dark",
     -- Whether to load all color schemes

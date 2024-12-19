@@ -26,11 +26,14 @@ local map_tele = function(mode, key, f, options, buffer)
 
   local rhs = function()
     local builtin = require("telescope.builtin")
+    local extensions = require"telescope".extensions
     local custom = require("plugins.telescope.cmds")
     if custom[f] then
       custom[f](options or {})
-    else
+    elseif builtin[f] then
       builtin[f](options or {})
+    elseif extensions[f] then
+      extensions[f][f](options or {})
     end
   end
 
@@ -43,7 +46,7 @@ local map_tele = function(mode, key, f, options, buffer)
   vim.keymap.set(mode, key, rhs, map_options)
 end
 
-map_tele("n", "<leader>;", "buffers", { desc = "buffers" })
+map_tele("n", "<leader>sb", "buffers", { desc = "buffers" })
 map_tele("n", "<leader><c-P>", "find_files", { desc = "find files" })
 
 -- LSP
@@ -66,5 +69,6 @@ map_tele("n", "<leader>st", "live_grep", { desc = "Live grep [Telescope]" })
 map_tele("n", "<leader>sl", "resume", { desc = "Resume last search [Telescope]" })
 map_tele("n", "<leader>sk", "keymaps", { desc = "Keymap [Telescope]" })
 map_tele("n", "<leader>sr", "registers", { desc = "Register [Telescope]" })
-map_tele("n", "<leader>sp", "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>", { desc = "Colorscheme with Preview" })
+-- map_tele("n", "<leader>sp", "projects", { desc = "Projects [Telescope]" })
+--map_tele("n", "<leader>su", "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>", { desc = "Colorscheme with Preview" })
 

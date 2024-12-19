@@ -76,6 +76,25 @@ return {
         },
       }
 
+      -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+    
+      -- Tell treesitter where dotenv parser is located
+      -- parser_config.dotenv = {
+      --     install_info = {
+      --         url = "https://github.com/pnx/tree-sitter-dotenv",
+      --         branch = "main",
+      --         files = { "src/parser.c", "src/scanner.c" },
+      --     },
+      --     filetype = "dotenv",
+      -- }
+
+      -- Associate .env files as "dotenv"
+      -- vim.filetype.add({
+      --     pattern = {
+      --         ['.env.*'] = 'dotenv',
+      --     },
+      -- })
+
     end,
 
   },
