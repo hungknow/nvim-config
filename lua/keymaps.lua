@@ -15,6 +15,7 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", { silent = true })
 -- Buffers
 map("n", "<leader>bb", "<cmd>bpre<cr>", { desc = "Previous Buffer" })
 map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Delete current Buffer" })
 
 map("v", "<", "<gv", {})
 map("v", ">", ">gv", {})
