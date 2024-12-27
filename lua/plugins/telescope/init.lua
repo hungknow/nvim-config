@@ -51,6 +51,9 @@ function M.config()
         enable_preview = true,
       },
     },
+    defaults = {
+        file_ignore_patterns = { ".git/", "node_modules/", "vendor/" },
+    }
   }
 
 end
