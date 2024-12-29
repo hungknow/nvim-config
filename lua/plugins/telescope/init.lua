@@ -52,7 +52,10 @@ function M.config()
       },
     },
     defaults = {
-        file_ignore_patterns = { ".git/", "node_modules/", "vendor/" },
+        file_ignore_patterns = {
+          ".git/", "node_modules/", "vendor/", 
+          "%.so", ".next/", "dist/", "%.d.ts" 
+        },
     }
   }
 
