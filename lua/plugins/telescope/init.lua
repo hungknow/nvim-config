@@ -54,7 +54,7 @@ function M.config()
     defaults = {
         file_ignore_patterns = {
           ".git/", "node_modules/", "vendor/", 
-          "%.so", ".next/", "dist/", "%.d.ts" 
+          "%.po", ".next/", "dist/", "%.d.ts" 
         },
     }
   }
