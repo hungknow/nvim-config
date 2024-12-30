@@ -61,7 +61,11 @@ return {
 
       require('mason').setup({})
       require('mason-lspconfig').setup({
-          ensure_installed = {},
+          ensure_installed = {
+            "terraformls", -- terraform language server
+            "tflint", -- terraform linter
+            "ts_ls",
+          },
           handlers = {
             lsp.default_setup,
             lua_ls = function()
@@ -99,6 +103,7 @@ return {
           local opts = {buffer = event.buf, remap = false}
 
           vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', vim.tbl_deep_extend("force", opts, { desc = "Hover [LSP]" }))
+          vim.keymap.set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
           vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
           vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
           vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
