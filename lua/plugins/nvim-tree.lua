@@ -15,13 +15,14 @@ local function my_on_attach(bufnr)
   end
 
   -- Add more key mapping for nvim-tree
-  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+  vim.keymap.set('n', 'h', api.tree.toggle_help, opts('Help'))
 end
 
 local M = {
     "nvim-tree/nvim-tree.lua",
-    cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus", "NvimTreeFindFileToggle" },
-    event = "User DirOpened",
+    -- cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus", "NvimTreeFindFileToggle" },
+    lazy = false,
+    -- event = "User DirOpened",
     opts = {
       view = {
         adaptive_size = true,
@@ -41,9 +42,9 @@ local M = {
         update_root = true
       },
     },
-    -- opts = {
-    --   on_attach = my_on_attach,
-    -- },
+    opts = {
+      on_attach = my_on_attach,
+    },
     dependencies = {
       'nvim-tree/nvim-web-devicons',
     }, 
