@@ -6,10 +6,10 @@ return {
       --"~/projects/*",
       --"~/p*cts/*", -- glob pattern is supported
       --"~/projects/repos/*",
-      --"~/.config/*",
+      "~/.config/nvim",
       --"~/work/*",
-      "~/work/stably/trinity-front-back",
-      "~/work/stably/trinity-front-back/dloop",
+      "~/work/stably/trinity-front-back/*",
+      "~/work/hk/*",
     },
     picker = {
       type = "telescope",
