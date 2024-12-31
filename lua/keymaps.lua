@@ -1,5 +1,8 @@
 local map = vim.keymap.set
 
+-- Save
+map("n", "<C-s>", "<cmd>:w<cr>", { desc = "Save the file" })
+
 -- Better window movement
 map("n", "<C-h>", "<C-w>h", { silent = true })
 map("n", "<C-j>", "<C-w>j", { silent = true })
@@ -13,9 +16,9 @@ map("t", "<C-k>", "<C-\\><C-N><C-w>k", { silent = true })
 map("t", "<C-l>", "<C-\\><C-N><C-w>l", { silent = true })
 
 -- Buffers
-map("n", "<leader>bb", "<cmd>bpre<cr>", { desc = "Previous Buffer" })
-map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Delete current Buffer" })
+map("n", "bb", "<cmd>bpre<cr>", { desc = "Previous Buffer" })
+map("n", "bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+map("n", "bd", "<cmd>bd<cr>", { desc = "Delete current Buffer" })
 
 map("v", "<", "<gv", {})
 map("v", ">", ">gv", {})

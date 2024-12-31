@@ -46,7 +46,7 @@ local map_tele = function(mode, key, f, options, buffer)
   vim.keymap.set(mode, key, rhs, map_options)
 end
 
-map_tele("n", "<leader>sb", "buffers", { desc = "buffers" })
+map_tele("n", "bs", "buffers", { desc = "buffers" })
 map_tele("n", "<leader><c-P>", "find_files", { desc = "find files" })
 
 -- LSP

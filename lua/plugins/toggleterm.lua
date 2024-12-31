@@ -120,9 +120,9 @@ end
 
 function M.init()
   local execs = {
-      { nil, "t1", "Horizontal Terminal 1", "horizontal"}, --, 0.3 },
-      { nil, "t2", "Horizontal Terminal 2", "horizontal"}, --, 0.3 },
-      { nil, "t3", "Horizontal Terminal 3", "horizontal", nil },
+      { nil, "t1", "Horizontal Terminal 1", "float"}, --, 0.3 },
+      { nil, "t2", "Horizontal Terminal 2", "float"}, --, 0.3 },
+      { nil, "t3", "Horizontal Terminal 3", "float", nil },
   } 
   for i, exec in pairs(execs) do
     local direction = exec[4] or M.opts.direction
