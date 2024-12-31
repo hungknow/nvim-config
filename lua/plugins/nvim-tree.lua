@@ -40,11 +40,13 @@ local M = {
         enable = true,
         update_root = true
       },
-
     },
     -- opts = {
     --   on_attach = my_on_attach,
     -- },
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    }, 
 }
 
 M.init = function()
