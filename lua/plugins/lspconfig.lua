@@ -59,6 +59,26 @@ return {
 		config = function()
 			local lsp = require("lsp-zero")
 
+			-- Add cmp_nvim_lsp capabilities settings to lspconfig
+			-- This should be executed before you configure any language server
+			local lspconfig_defaults = require("lspconfig").util.default_config
+
+			lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+				"force",
+				lspconfig_defaults.capabilities,
+				require("cmp_nvim_lsp").default_capabilities(),
+				-- Reference: https://lsp-zero.netlify.app/docs/guide/quick-recipes.html#enable-folds-with-nvim-ufo
+				-- Advertise the "folding capabilities" to the language servers.
+				{
+					textDocument = {
+						foldingRange = {
+							dynamicRegistration = false,
+							lineFoldingOnly = true,
+						},
+					},
+				}
+			)
+
 			require("mason").setup({})
 			require("mason-lspconfig").setup({
 				-- ensure_installed = {
@@ -80,6 +100,7 @@ return {
 						local util = require("lspconfig/util")
 
 						require("lspconfig").gopls.setup({
+							capabilities = capabilities,
 							cmd = { "gopls" },
 							filetypes = { "go", "gomod", "gowork", "gotmpl" },
 							root_dir = util.root_pattern("go.work", "go.mod", ".git"),
@@ -105,26 +126,6 @@ return {
 					end,
 				},
 			})
-
-			-- Add cmp_nvim_lsp capabilities settings to lspconfig
-			-- This should be executed before you configure any language server
-			local lspconfig_defaults = require("lspconfig").util.default_config
-
-			lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-				"force",
-				lspconfig_defaults.capabilities,
-				require("cmp_nvim_lsp").default_capabilities(),
-				-- Reference: https://lsp-zero.netlify.app/docs/guide/quick-recipes.html#enable-folds-with-nvim-ufo
-				-- Advertise the "folding capabilities" to the language servers.
-				{
-					textDocument = {
-						foldingRange = {
-							dynamicRegistration = false,
-							lineFoldingOnly = true,
-						},
-					},
-				}
-			)
 
 			-- This is where you enable features that only work
 			-- if there is a language server active in the file
@@ -195,7 +196,11 @@ return {
 				},
 				mapping = cmp.mapping.preset.insert({
 					["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+					["<S-Tab>"] = cmp.mapping.select_prev_item(cmp_select),
+					["<up>"] = cmp.mapping.select_prev_item(cmp_select),
 					["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+					["<Tab>"] = cmp.mapping.select_next_item(cmp_select),
+					["<down>"] = cmp.mapping.select_next_item(cmp_select),
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["<C-Space>"] = cmp.mapping.complete(),
 					-- ["<C-f>"] = cmp_action.luasnip_jump_forward(),
@@ -206,36 +211,36 @@ return {
 			})
 		end,
 	},
-  {
-    "mfussenegger/nvim-lint",
+	{
+		"mfussenegger/nvim-lint",
 		event = { "BufReadPre" },
-    config = function()
-      local lint = require('lint')
-      lint.linters_by_ft = {
-        markdown = {'vale'},
-        typescript = {'eslint_d'},
-        typescriptreact = {'eslint_d'},
-        javascript = {'eslint_d'},
-        javascriptreact = {'eslint_d'},
-        go = {'golangcilint'},
-        terraform = { "tflint" },
-      }
+		config = function()
+			local lint = require("lint")
+			lint.linters_by_ft = {
+				markdown = { "vale" },
+				typescript = { "eslint_d" },
+				typescriptreact = { "eslint_d" },
+				javascript = { "eslint_d" },
+				javascriptreact = { "eslint_d" },
+				go = { "golangcilint" },
+				terraform = { "tflint" },
+			}
 
-      local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
-      vim.api.nvim_create_autocmd( { "bufenter", "insertleave" }, {
-        group = lint_augroup,
-        callback = function()
-          lint.try_lint()
-        end,
-      })
+			vim.api.nvim_create_autocmd({ "bufenter", "insertleave" }, {
+				group = lint_augroup,
+				callback = function()
+					lint.try_lint()
+				end,
+			})
 
-      vim.keymap.set("n", "<leader>ll", function()
-        lint.try_lint()
-      end, { desc = "Trigger linting for current file" })
-      return lint
-    end
-  },
+			vim.keymap.set("n", "<leader>ll", function()
+				lint.try_lint()
+			end, { desc = "Trigger linting for current file" })
+			return lint
+		end,
+	},
 	{
 		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufNewFile" },
