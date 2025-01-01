@@ -61,17 +61,48 @@ return {
 
       require('mason').setup({})
       require('mason-lspconfig').setup({
-          ensure_installed = {
-            "terraformls", -- terraform language server
-            "tflint", -- terraform linter
-            "ts_ls",
-          },
+          -- ensure_installed = {
+          --   "terraformls", -- terraform language server
+          --   "tflint", -- terraform linter
+          --   "ts_ls",
+          --   "gopls", -- Golang
+          -- },
+          automatic_installation = true,
           handlers = {
-            lsp.default_setup,
+            function(server_name)
+              require('lspconfig')[server_name].setup({})
+            end,
             lua_ls = function()
               local lua_opts = lsp.nvim_lua_ls()
               require("lspconfig").lua_ls.setup(lua_opts)
             end,
+            gopls = function()
+              local util = require("lspconfig/util")
+
+              require("lspconfig").gopls.setup({
+                cmd = {"gopls"},
+                filetypes = { "go", "gomod", "gowork", "gotmpl" },
+                root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+                settings = {
+                  gopls = {
+                   analyses = {
+                      unusedparams = true,
+                      unusedvariable = false,
+                    },
+                    usePlaceholders = true,
+                    completeUnimported = true,
+                    staticcheck = true,
+                    semanticTokens = true,
+                    ["ui.inlayhint.hints"] = {
+                      compositeLiteralFields = true,
+                      constantValues = true,
+                      parameterNames = true,
+                      functionTypeParameters = true,
+                    },
+                  },
+                },
+              })
+            end
           }
         })
 
@@ -101,6 +132,7 @@ return {
         desc = 'LSP actions',
         callback = function(event)
           local opts = {buffer = event.buf, remap = false}
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
 
           vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', vim.tbl_deep_extend("force", opts, { desc = "Hover [LSP]" }))
           vim.keymap.set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
@@ -111,13 +143,12 @@ return {
           vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
           vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
           vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-          vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-          vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+          -- vim.keymap.set({'n', 'x'}, 'gf', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
         end,
       })
 
 
-      local cmp_action = require("lsp-zero").cmp_action()
+      -- local cmp_action = require("lsp-zero").cmp_action()
       local cmp = require("cmp")
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
@@ -163,13 +194,28 @@ return {
           ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
           ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-f>"] = cmp_action.luasnip_jump_forward(),
-          ["<C-b>"] = cmp_action.luasnip_jump_backward(),
-          ["<Tab>"] = cmp_action.luasnip_supertab(),
-          ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
+          -- ["<C-f>"] = cmp_action.luasnip_jump_forward(),
+          -- ["<C-b>"] = cmp_action.luasnip_jump_backward(),
+          -- ["<Tab>"] = cmp_action.luasnip_supertab(),
+          -- ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
         }),
       })
 
     end,
+  },
+  {
+    'stevearc/conform.nvim',
+    event = { "BufReadPre", "BufNewFile" },
+    -- opts = {},
+    config = function ()
+      require("conform").setup()
+      vim.keymap.set({ "n", "v" }, "<leader>gf", function()
+        require("conform").format({
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 1000,
+        })
+      end, { desc = "Format file or range using conform" })
+    end
   }
 }
